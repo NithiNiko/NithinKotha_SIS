@@ -19,6 +19,7 @@ class DBInteraction:
         self.phone_number=input("Enter student phone number: ")
         cursor.execute("INSERT INTO Students (student_id, first_name, last_name, date_of_birth, email, phone_number) VALUES (%s,%s,%s,%s,%s,%s)",
                       (self.student_id, self.first_name, self.last_name, self.date_of_birth, self.email, self.phone_number))
+        print("Student has been created succesfully")
 
         conn.commit()
         conn.close()
@@ -33,6 +34,7 @@ class DBInteraction:
 
         cursor.execute("INSERT INTO Courses (course_id, course_name, course_code, instructor_name) VALUES (%s,%s,%s,%s)",
                       (self.course_id, self.course_name, self.course_code, self.instructor_name))
+        print("Course has been created succesfully")
 
         conn.commit()
         conn.close()
@@ -48,6 +50,7 @@ class DBInteraction:
 
         cursor.execute("INSERT INTO Enrollments (enrollment_id, student_id, course_id, enrollment_date) VALUES (%s,%s,%s,%s)",
                       (self.enrollment_id, self.student_id, self.course_id, self.enrollment_date))
+        print("Enrollment has been created succesfully")
 
         conn.commit()
         conn.close()
@@ -63,6 +66,7 @@ class DBInteraction:
 
         cursor.execute("INSERT INTO Teachers (teacher_id, first_name, last_name, email) VALUES (%s,%s,%s,%s)",
                       (self.teacher_id, self.first_name, self.last_name, self.email, self.expertise))
+        print("Teacher has been created succesfully")
 
         conn.commit()
         conn.close()
@@ -70,13 +74,14 @@ class DBInteraction:
     def create_payment(self):
         conn = self.db_conn_util.makeconnection()
         cursor = conn.cursor()
-        payment_id=int(input("Enter the payment id: "))
-        student_id=int(input("Enter the student id: "))
-        amount=int(input("Enter the amount: "))
-        payment_date=input("Enter the payment date: ")
+        self.payment_id=int(input("Enter the payment id: "))
+        self.student_id=int(input("Enter the student id: "))
+        self.amount=int(input("Enter the amount: "))
+        self.payment_date=input("Enter the payment date: ")
 
         cursor.execute("INSERT INTO Payments (payment_id, student_id, amount, payment_date) VALUES (%s,%s,%s,%s)",
                       (self.payment_id, self.student_id, self.amount, self.payment_date))
+        print("Payment has been created succesfully")
 
         conn.commit()
         conn.close()
@@ -172,6 +177,7 @@ class DBInteraction:
 
         cursor.execute("UPDATE Students SET first_name = %s, last_name = %s, date_of_birth = %s, email = %s, phone_number = %s WHERE student_id = %s",
                       (self.first_name, self.last_name, self.date_of_birth, self.email, self.phone_number, self.student_id))
+        print("Student information has been updated successfully")
 
         conn.commit()
         conn.close()
@@ -185,6 +191,7 @@ class DBInteraction:
         self.course_id=int(input("Enter the course id: "))
         cursor.execute("UPDATE Courses SET course_name = ?, course_code = ?, instructor_name = ? WHERE course_id = ?",
                       (self.course_name, self.course_code, self.instructor_name, self.course_id))
+        print("Course information has been updated successfully")
 
         conn.commit()
         conn.close()
@@ -199,6 +206,11 @@ class DBInteraction:
         sql="UPDATE Teacher SET first_name = ?, last_name = ?, email = ? WHERE teacher_id = ? "
         values=[(self.first_name,self.last_name,self.email,self.teacher_id)]
 
+        print("Teacher information has been updated successfully")
+
         cursor.execute(sql,values)
         conn.commit()
         conn.close()
+
+obj=DBInteraction()
+obj.create_payment()
